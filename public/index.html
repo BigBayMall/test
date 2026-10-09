@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FocalCut | Premium Short-Form Video Editing & Retention Agency</title>
+<meta name="description" content="FocalCut turns raw footage into retention-engineered short-form video. One-time packages of 4, 10 or 15 edits. 24–48h first-draft turnaround. Secure Stripe checkout.">
+<meta name="keywords" content="short form video editing agency, tiktok video editor, reels editing service, youtube shorts editor, retention editing, hook optimization, video editing packages">
+<meta name="author" content="Big Bay Mall LLC">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://focalcut.com/">
+<meta name="theme-color" content="#0A0A0A">
+
+<meta property="og:site_name" content="FocalCut">
+<meta property="og:title" content="FocalCut | Premium Short-Form Video Editing">
+<meta property="og:description" content="One-time video editing packages. Retention-engineered hooks, pacing, captions and sound. 24–48h first-draft turnaround.">
+<meta property="og:url" content="https://focalcut.com/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ===== ROOT VARIABLES ===== */
+:root {
+  --bg-primary:#050508;
+  --bg-surface:#0c0c12;
+  --bg-elevated:#14141e;
+  --bg-card:#0a0a14;
+  --border-default:rgba(255,255,255,0.06);
+  --border-hover:rgba(163,230,53,0.2);
+  --text-primary:#f0f0f5;
+  --text-secondary:#a0a0b0;
+  --text-muted:#606070;
+  --accent:#A3E635;
+  --accent-dim:rgba(163,230,53,0.15);
+  --accent-glow:rgba(163,230,53,0.4);
+  --cyan:#00f0ff;
+  --purple:#a855f7;
+  --pink:#ec4899;
+  --success:#22C55E;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg-primary);
+  color:var(--text-primary);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  cursor:none;
+}
+h1,h2,h3,h4,h5{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.03em;line-height:1.1}
+a{color:inherit;text-decoration:none;transition:all .3s}
+img{max-width:100%;display:block}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+::selection{background:rgba(163,230,53,0.3);color:#fff}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg-primary)}
+::-webkit-scrollbar-thumb{background:rgba(163,230,53,0.3);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
+  body{cursor:auto}
+}
+
+/* ===== CUSTOM CURSOR ===== */
+.cursor-dot{
+  position:fixed;width:8px;height:8px;background:var(--accent);border-radius:50%;
+  pointer-events:none;z-index:9999;transition:transform .1s;mix-blend-mode:difference;
+}
+.cursor-ring{
+  position:fixed;width:40px;height:40px;border:1.5px solid var(--accent);border-radius:50%;
+  pointer-events:none;z-index:9998;transition:all .15s ease-out;opacity:.5;
+}
+.cursor-ring.hover{width:60px;height:60px;border-color:var(--cyan);opacity:.8}
+@media(max-width:900px){body{cursor:auto}.cursor-dot,.cursor-ring{display:none}}
+
+/* ===== PARTICLE CANVAS ===== */
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4}
+
+/* ===== SCANLINE OVERLAY ===== */
+.scanlines{
+  position:fixed;inset:0;z-index:9990;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);
+}
+
+/* ===== LOADING SCREEN ===== */
+.loader{
+  position:fixed;inset:0;z-index:10000;background:var(--bg-primary);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity .6s,visibility .6s;
+}
+.loader.hidden{opacity:0;visibility:hidden}
+.loader-bar{width:200px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;margin-top:20px}
+.loader-bar-fill{width:0;height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
+.loader-text{font-family:'JetBrains Mono';font-size:12px;color:var(--accent);letter-spacing:.1em}
+
+/* ===== ANIMATIONS ===== */
+@keyframes float{0%,100%{transform:translateY(0) translateX(0)}33%{transform:translateY(-30px) translateX(15px)}66%{transform:translateY(-15px) translateX(-10px)}}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 20px rgba(163,230,53,.2)}50%{box-shadow:0 0 50px rgba(163,230,53,.5)}}
+@keyframes gradient-shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+@keyframes glitch{0%,100%{transform:translate(0)}20%{transform:translate(-2px,2px)}40%{transform:translate(2px,-2px)}60%{transform:translate(-1px,-1px)}80%{transform:translate(1px,1px)}}
+@keyframes scan{0%{top:-100%}100%{top:200%}}
+@keyframes typewriter{from{width:0}to{width:100%}}
+@keyframes blink{0%,100%{border-color:var(--accent)}50%{border-color:transparent}}
+@keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes neonPulse{0%,100%{text-shadow:0 0 10px var(--accent-glow),0 0 20px var(--accent-glow),0 0 40px var(--accent-glow)}50%{text-shadow:0 0 5px var(--accent-glow),0 0 10px var(--accent-glow),0 0 20px var(--accent-glow)}}
+@keyframes borderGlow{0%,100%{border-color:rgba(163,230,53,.2)}50%{border-color:rgba(163,230,53,.6)}}
+@keyframes slideIn{from{transform:translateX(-100%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes countUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes holoShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+/* ===== ORBS ===== */
+.orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:.12;pointer-events:none;animation:float 12s ease-in-out infinite}
+.orb-1{width:600px;height:600px;background:var(--accent);top:-15%;left:-10%}
+.orb-2{width:500px;height:500px;background:var(--purple);bottom:-15%;right:-10%;animation-delay:-4s}
+.orb-3{width:400px;height:400px;background:var(--cyan);top:40%;right:15%;animation-delay:-8s}
+.orb-4{width:350px;height:350px;background:var(--pink);top:10%;right:-10%;animation-delay:-2s}
+.orb-5{width:450px;height:450px;background:var(--cyan);bottom:-10%;left:20%;animation-delay:-6s}
+
+/* ===== GRID BG ===== */
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(163,230,53,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(163,230,53,.03) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at center,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at center,black 20%,transparent 70%);pointer-events:none}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:12px;font-weight:600;font-size:15px;font-family:'Inter',sans-serif;cursor:none;border:none;transition:all .3s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden}
+.btn-primary{background:var(--accent);color:#000!important;box-shadow:0 0 20px rgba(163,230,53,.15)}
+.btn-primary:hover{background:#BEF264;transform:translateY(-3px);box-shadow:0 0 50px rgba(163,230,53,.4)}
+.btn-primary::after{content:'';position:absolute;top:0;left:0;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);animation:shimmer 3s infinite}
+.btn-ghost{background:transparent;color:var(--text-primary);border:1px solid rgba(255,255,255,.1)}
+.btn-ghost:hover{border-color:var(--accent);background:var(--accent-dim);transform:translateY(-3px)}
+.btn-lg{padding:18px 36px;font-size:16px;border-radius:14px}
+.btn-primary-pulse{animation:pulse-glow 2.5s ease-in-out infinite}
+.btn-cyan{background:var(--cyan);color:#000!important;box-shadow:0 0 20px rgba(0,240,255,.2)}
+.btn-cyan:hover{box-shadow:0 0 50px rgba(0,240,255,.5);transform:translateY(-3px)}
+
+/* ===== NAV ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:all .4s;background:transparent}
+.nav.scrolled{background:rgba(5,5,8,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border-default)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#65A30D);display:flex;align-items:center;justify-content:center;box-shadow:0 0 15px rgba(163,230,53,.3)}
+.logo-icon svg{width:16px;height:16px;fill:#000}
+.logo-text{font-family:'Space Grotesk';font-weight:700;font-size:20px;color:#fff}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--text-secondary);font-size:14px;font-weight:500;transition:all .2s;position:relative}
+.nav-links a:hover{color:#fff}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--accent);transition:width .3s}
+.nav-links a:hover::after{width:100%}
+.menu-toggle{display:none;background:none;border:none;color:#fff;font-size:26px;cursor:none}
+@media(max-width:900px){
+  .menu-toggle{display:block}
+  .nav-links{display:none;position:absolute;top:72px;left:0;right:0;background:rgba(12,12,18,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-default);flex-direction:column;padding:16px 24px;gap:4px}
+  .nav-links a{padding:12px 0;font-size:16px}
+  .nav.open .nav-links{display:flex}
+}
+
+/* ===== URGENCY BAR ===== */
+.urgency-bar{
+  position:fixed;top:72px;left:0;right:0;z-index:99;
+  background:linear-gradient(90deg,rgba(163,230,53,.1),rgba(0,240,255,.1),rgba(168,85,247,.1));
+  border-bottom:1px solid rgba(163,230,53,.15);
+  padding:10px 0;text-align:center;font-size:13px;
+  backdrop-filter:blur(10px);
+}
+.urgency-bar strong{color:var(--accent)}
+.urgency-timer{font-family:'JetBrains Mono';color:var(--cyan);font-weight:700}
+
+/* ===== HERO ===== */
+.hero{position:relative;padding:200px 0 100px;overflow:hidden;min-height:100vh;display:flex;align-items:center}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(163,230,53,.06),transparent 55%);pointer-events:none}
+.hero-inner{position:relative;z-index:2;text-align:center;max-width:950px;margin:0 auto}
+
+/* HUD corners */
+.hud-frame{position:relative;padding:40px}
+.hud-frame::before,.hud-frame::after,.hud-frame .corner-bl,.hud-frame .corner-br{
+  content:'';position:absolute;width:30px;height:30px;border-color:var(--accent);border-style:solid;opacity:.4
+}
+.hud-frame::before{top:0;left:0;border-width:2px 0 0 2px}
+.hud-frame::after{top:0;right:0;border-width:2px 2px 0 0}
+.hud-frame .corner-bl{bottom:0;left:0;border-width:0 0 2px 2px}
+.hud-frame .corner-br{bottom:0;right:0;border-width:0 2px 2px 0}
+
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:100px;background:rgba(163,230,53,.06);border:1px solid rgba(163,230,53,.2);color:var(--accent);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:32px;backdrop-filter:blur(8px);font-family:'JetBrains Mono'}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--success);box-shadow:0 0 8px var(--success);animation:pulse-glow 2s infinite}
+
+h1{font-size:clamp(38px,6vw,72px);margin-bottom:24px;line-height:1.05}
+.gradient-text{background:linear-gradient(90deg,var(--accent),var(--cyan),var(--purple),var(--accent));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:gradient-shift 4s linear infinite}
+
+.hero-desc{font-size:clamp(16px,1.5vw,19px);color:var(--text-secondary);max-width:640px;margin:0 auto 40px;line-height:1.7}
+
+.hero-stats{display:flex;gap:40px;justify-content:center;margin:40px 0;flex-wrap:wrap}
+.hero-stat{text-align:center;padding:20px 24px;border-radius:16px;background:rgba(255,255,255,.02);border:1px solid var(--border-default);backdrop-filter:blur(8px);min-width:120px}
+.hero-stat .stat-num{font-family:'Space Grotesk';font-size:36px;font-weight:700;color:var(--accent);line-height:1}
+.hero-stat .stat-lbl{font-size:11px;color:var(--text-muted);letter-spacing:.05em;text-transform:uppercase;margin-top:8px;font-family:'JetBrains Mono'}
+
+.hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+.hero-meta{margin-top:60px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding-top:40px;border-top:1px solid var(--border-default)}
+.hero-meta div{display:flex;flex-direction:column;align-items:center;gap:4px}
+.hero-meta .num{font-family:'Space Grotesk';font-size:20px;font-weight:700}
+.hero-meta .lbl{font-size:11px;color:var(--text-muted);letter-spacing:.05em;text-transform:uppercase;font-family:'JetBrains Mono'}
+
+/* ===== LIVE COUNTER ===== */
+.live-counter{
+  display:inline-flex;align-items:center;gap:10px;padding:10px 20px;
+  border-radius:100px;background:rgba(0,240,255,.06);border:1px solid rgba(0,240,255,.2);
+  font-family:'JetBrains Mono';font-size:12px;color:var(--cyan);margin-top:24px;
+}
+.live-counter .pulse{width:8px;height:8px;border-radius:50%;background:var(--cyan);animation:pulse-glow 1.5s infinite;box-shadow:0 0 8px var(--cyan)}
+
+/* ===== TRUST LOGOS ===== */
+.trust-section{padding:60px 0;border-bottom:1px solid var(--border-default);position:relative;overflow:hidden}
+.trust-label{text-align:center;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:32px;font-family:'JetBrains Mono'}
+.trust-logos{display:flex;justify-content:center;align-items:center;gap:48px;flex-wrap:wrap;opacity:.5}
+.trust-logo{font-family:'Space Grotesk';font-size:18px;font-weight:700;color:var(--text-secondary);transition:all .3s;letter-spacing:-.02em}
+.trust-logo:hover{color:var(--accent);opacity:1;transform:scale(1.05)}
+
+/* ===== BEFORE/AFTER SLIDER ===== */
+.ba-section{background:var(--bg-surface);border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default)}
+.ba-container{max-width:400px;margin:0 auto;position:relative;aspect-ratio:9/16;border-radius:24px;overflow:hidden;border:1px solid var(--border-default)}
+.ba-before,.ba-after{position:absolute;inset:0;background-size:cover;background-position:center}
+.ba-before{background:linear-gradient(135deg,#1a1a2e,#16213e);z-index:1}
+.ba-after{background:linear-gradient(135deg,#0f3443,#34e89e);z-index:2;clip-path:inset(0 0 0 50%)}
+.ba-before-content,.ba-after-content{position:absolute;bottom:0;left:0;right:0;padding:24px;z-index:5}
+.ba-before-content{background:linear-gradient(transparent,rgba(0,0,0,.8))}
+.ba-after-content{background:linear-gradient(transparent,rgba(0,0,0,.8))}
+.ba-label{font-family:'JetBrains Mono';font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:6px;display:inline-block}
+.ba-label.before{background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.3)}
+.ba-label.after{background:rgba(163,230,53,.2);color:var(--accent);border:1px solid rgba(163,230,53,.3)}
+.ba-slider{position:absolute;top:0;bottom:0;left:50%;width:3px;background:var(--accent);z-index:10;cursor:ew-resize;box-shadow:0 0 10px var(--accent-glow)}
+.ba-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:var(--bg-primary);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px var(--accent-glow);z-index:11}
+.ba-handle svg{width:20px;height:20px;color:var(--accent)}
+.ba-metrics{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+.ba-metric{padding:16px;border-radius:12px;background:var(--bg-card);border:1px solid var(--border-default);text-align:center}
+.ba-metric .val{font-family:'Space Grotesk';font-size:24px;font-weight:700}
+.ba-metric .val.red{color:#ef4444}
+.ba-metric .val.green{color:var(--accent)}
+.ba-metric .lbl{font-size:11px;color:var(--text-muted);margin-top:4px;font-family:'JetBrains Mono';text-transform:uppercase;letter-spacing:.05em}
+
+/* ===== STYLES SHOWCASE ===== */
+.styles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.style-card{position:relative;aspect-ratio:9/14;border-radius:20px;overflow:hidden;border:1px solid var(--border-default);cursor:none;transition:all .4s}
+.style-card:hover{transform:translateY(-8px) scale(1.02);border-color:var(--accent);box-shadow:0 20px 50px rgba(163,230,53,.1)}
+.style-card-bg{position:absolute;inset:0}
+.style-card-bg.s1{background:linear-gradient(135deg,#667eea,#764ba2)}
+.style-card-bg.s2{background:linear-gradient(135deg,#f093fb,#f5576c)}
+.style-card-bg.s3{background:linear-gradient(135deg,#4facfe,#00f2fe)}
+.style-card-bg.s4{background:linear-gradient(135deg,#A3E635,#065f46)}
+.style-card-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
+.style-card-icon{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.style-card h4{font-size:15px;margin-bottom:4px}
+.style-card p{font-size:12px;color:var(--text-secondary)}
+.style-card .tag{position:absolute;top:12px;right:12px;padding:4px 10px;border-radius:6px;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);font-size:10px;font-weight:700;color:var(--accent);font-family:'JetBrains Mono';letter-spacing:.05em}
+
+/* ===== COMPARISON TABLE ===== */
+.compare-table{width:100%;border-collapse:separate;border-spacing:0;border-radius:20px;overflow:hidden;border:1px solid var(--border-default)}
+.compare-table th,.compare-table td{padding:16px 20px;text-align:left;font-size:14px;border-bottom:1px solid var(--border-default)}
+.compare-table thead th{background:var(--bg-elevated);font-family:'Space Grotesk';font-weight:600;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--text-secondary)}
+.compare-table thead th:last-child{color:var(--accent)}
+.compare-table tbody tr{background:var(--bg-card);transition:background .2s}
+.compare-table tbody tr:hover{background:var(--bg-elevated)}
+.compare-table tbody tr:last-child td{border-bottom:none}
+.compare-table .check{color:var(--accent);font-weight:700;font-size:18px}
+.compare-table .cross{color:#ef4444;font-weight:700;font-size:18px}
+.compare-table .meh{color:var(--warning);font-size:14px}
+
+/* ===== ROI CALCULATOR ===== */
+.calculator{max-width:700px;margin:0 auto;padding:40px;border-radius:24px;background:var(--bg-card);border:1px solid var(--border-default);position:relative;overflow:hidden}
+.calculator::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--cyan),var(--purple))}
+.calc-row{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--border-default)}
+.calc-row:last-of-type{border-bottom:none}
+.calc-label{font-size:14px;color:var(--text-secondary)}
+.calc-input{display:flex;align-items:center;gap:8px}
+.calc-input input[type=range]{-webkit-appearance:none;width:160px;height:4px;background:rgba(255,255,255,.1);border-radius:2px;outline:none}
+.calc-input input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:none;box-shadow:0 0 10px var(--accent-glow)}
+.calc-value{font-family:'JetBrains Mono';font-size:14px;color:var(--accent);min-width:60px;text-align:right}
+.calc-result{margin-top:24px;padding:24px;border-radius:16px;background:rgba(163,230,53,.05);border:1px solid rgba(163,230,53,.2);text-align:center}
+.calc-result .big{font-family:'Space Grotesk';font-size:48px;font-weight:700;color:var(--accent);animation:neonPulse 3s infinite}
+.calc-result .sub{font-size:13px;color:var(--text-muted);margin-top:8px}
+
+/* ===== PLATFORM RESULTS ===== */
+.platforms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.platform-card{padding:28px;border-radius:20px;background:var(--bg-card);border:1px solid var(--border-default);transition:all .3s;position:relative;overflow:hidden}
+.platform-card:hover{transform:translateY(-5px);border-color:var(--border-hover)}
+.platform-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:3px 3px 0 0}
+.platform-card.tiktok::after{background:linear-gradient(90deg,#ff0050,#00f2ea)}
+.platform-card.reels::after{background:linear-gradient(90deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
+.platform-card.shorts::after{background:linear-gradient(90deg,#ff0000,#ff4444)}
+.platform-icon{font-size:28px;margin-bottom:16px}
+.platform-name{font-family:'Space Grotesk';font-size:16px;font-weight:600;margin-bottom:16px}
+.platform-stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border-default);font-size:13px}
+.platform-stat:last-child{border-bottom:none}
+.platform-stat .label{color:var(--text-muted)}
+.platform-stat .value{color:var(--accent);font-family:'JetBrains Mono';font-weight:600}
+
+/* ===== TERMINAL SECTION ===== */
+.terminal{max-width:700px;margin:0 auto;border-radius:16px;overflow:hidden;border:1px solid var(--border-default);background:#0a0a0f;font-family:'JetBrains Mono'}
+.terminal-header{display:flex;align-items:center;gap:8px;padding:12px 16px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--border-default)}
+.terminal-dot{width:10px;height:10px;border-radius:50%}
+.terminal-dot.red{background:#ff5f57}
+.terminal-dot.yellow{background:#ffbd2e}
+.terminal-dot.green{background:#28c840}
+.terminal-title{font-size:11px;color:var(--text-muted);margin-left:8px}
+.terminal-body{padding:20px;font-size:13px;line-height:2;color:var(--text-secondary)}
+.terminal-body .prompt{color:var(--accent)}
+.terminal-body .cmd{color:var(--cyan)}
+.terminal-body .output{color:var(--text-secondary)}
+.terminal-body .success{color:var(--success)}
+.terminal-body .highlight{color:var(--accent);font-weight:700}
+.terminal-cursor{display:inline-block;width:8px;height:16px;background:var(--accent);animation:blink 1s infinite;vertical-align:middle}
+
+/* ===== PORTFOLIO ===== */
+.portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.work{position:relative;aspect-ratio:9/16;border-radius:20px;overflow:hidden;border:1px solid var(--border-default);background:#000;transition:all .4s cubic-bezier(.25,.46,.45,.94)}
+.work:hover{transform:translateY(-8px) scale(1.02);border-color:rgba(163,230,53,.3);box-shadow:0 30px 60px rgba(0,0,0,.5)}
+.work-bg{position:absolute;inset:0}
+.work-bg-1{background:linear-gradient(135deg,rgba(139,92,246,.3),rgba(59,130,246,.2))}
+.work-bg-2{background:linear-gradient(135deg,rgba(163,230,53,.2),rgba(6,182,212,.2))}
+.work-bg-3{background:linear-gradient(135deg,rgba(249,115,22,.2),rgba(236,72,153,.2))}
+.work-overlay{position:absolute;inset:0;background:rgba(5,5,8,.6)}
+.work-grid{position:absolute;inset:0;opacity:.15;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:20px 20px}
+.work-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.work-play-btn{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.08);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;transition:all .3s}
+.work:hover .work-play-btn{transform:scale(1.2);background:rgba(163,230,53,.15);border-color:rgba(163,230,53,.4);box-shadow:0 0 30px rgba(163,230,53,.2)}
+.work-play-btn svg{width:24px;height:24px;fill:#fff;color:#fff}
+.work-badge{position:absolute;top:16px;left:16px;z-index:3;background:rgba(5,5,8,.85);backdrop-filter:blur(8px);border:1px solid rgba(163,230,53,.3);border-radius:10px;padding:6px 12px;display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono';font-size:11px;font-weight:700;color:var(--accent)}
+.work-badge .badge-dot{width:6px;height:6px;border-radius:50%;background:var(--success);box-shadow:0 0 6px var(--success)}
+.work-info{position:absolute;bottom:0;left:0;right:0;padding:20px;z-index:2;background:linear-gradient(0deg,rgba(0,0,0,.9) 0%,transparent 100%)}
+.work-cat{font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;margin-bottom:6px;font-family:'JetBrains Mono'}
+.work-title{font-family:'Space Grotesk';font-size:15px;font-weight:600}
+
+/* ===== PROCESS ===== */
+.process{background:rgba(12,12,18,.5);border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default)}
+.process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;position:relative}
+.process-line{display:none;position:absolute;top:48px;left:16.66%;right:16.66%;height:2px;background:linear-gradient(90deg,transparent,rgba(163,230,53,.2),transparent)}
+@media(min-width:960px){.process-line{display:block}}
+.sys{background:var(--bg-card);border:1px solid var(--border-default);border-radius:20px;padding:28px 24px;transition:all .3s;position:relative;overflow:hidden}
+.sys:hover{transform:translateY(-5px);border-color:rgba(163,230,53,.2);box-shadow:0 20px 40px rgba(163,230,53,.05)}
+.sys-icon{width:44px;height:44px;border-radius:14px;background:rgba(163,230,53,.08);border:1px solid rgba(163,230,53,.15);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--accent);transition:all .3s}
+.sys:hover .sys-icon{background:rgba(163,230,53,.15);box-shadow:0 0 20px rgba(163,230,53,.15)}
+.sys-num{font-family:'JetBrains Mono';font-size:12px;font-weight:700;color:var(--accent);margin-bottom:4px;letter-spacing:.1em}
+.sys h4{font-size:17px;margin-bottom:8px}
+.sys p{color:var(--text-secondary);font-size:13.5px;line-height:1.7}
+.sys::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(163,230,53,.02),transparent);opacity:0;transition:opacity .3s;pointer-events:none}
+.sys:hover::after{opacity:1}
+
+/* ===== TESTIMONIALS ===== */
+.guarantee-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.testi-card{background:var(--bg-card);border:1px solid var(--border-default);border-radius:20px;padding:28px;display:flex;flex-direction:column;transition:all .3s;position:relative;overflow:hidden}
+.testi-card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.1)}
+.testi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.testi-header{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.testi-avatar{width:48px;height:48px;border-radius:50%;overflow:hidden;border:2px solid rgba(163,230,53,.4);flex-shrink:0}
+.testi-avatar img{width:100%;height:100%;object-fit:cover}
+.testi-info h4{font-size:14px;font-weight:600;margin-bottom:2px}
+.testi-info p{font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono'}
+.testi-result{display:inline-block;background:rgba(163,230,53,.08);color:var(--accent);padding:5px 14px;border-radius:100px;font-size:11px;font-weight:700;margin-bottom:14px;font-family:'JetBrains Mono';border:1px solid rgba(163,230,53,.15)}
+.testi-card blockquote{font-size:14px;color:var(--text-secondary);line-height:1.7;font-style:italic;flex:1;margin:0}
+.testi-stars{display:flex;gap:2px;margin-top:14px}
+.testi-stars svg{width:14px;height:14px;fill:var(--accent);color:var(--accent)}
+
+/* ===== PRICING ===== */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.plan{background:var(--bg-card);border:1px solid var(--border-default);border-radius:22px;padding:28px 30px 36px;display:flex;flex-direction:column;transition:all .3s;position:relative;overflow:hidden}
+.plan:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.12)}
+.plan.featured{border:2px solid rgba(163,230,53,.3);background:linear-gradient(180deg,rgba(163,230,53,.03),var(--bg-card));box-shadow:0 20px 60px rgba(163,230,53,.08)}
+.plan.featured:hover{transform:translateY(-5px);border-color:rgba(163,230,53,.5)}
+.plan.featured::before{content:"MOST POPULAR";position:absolute;top:16px;right:16px;background:var(--accent);color:#000;padding:6px 14px;border-radius:100px;font-size:9px;font-weight:800;letter-spacing:.08em;z-index:10;animation:pulse-glow 2s infinite;font-family:'JetBrains Mono'}
+/* Holographic effect for featured plan */
+.plan.featured::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(163,230,53,.03),rgba(0,240,255,.03),rgba(168,85,247,.03),rgba(163,230,53,.03));background-size:400% 400%;animation:holoShift 8s ease infinite;pointer-events:none;border-radius:inherit}
+.plan-icon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.plan-icon.default{background:rgba(255,255,255,.04);border:1px solid var(--border-default)}
+.plan-icon.accent{background:rgba(163,230,53,.1);border:1px solid rgba(163,230,53,.2);box-shadow:0 0 20px rgba(163,230,53,.1)}
+.plan-icon svg{width:22px;height:22px}
+.plan-name{color:var(--text-secondary);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;font-family:'JetBrains Mono'}
+.plan-best{color:var(--accent);font-size:12px;font-weight:600;margin-bottom:16px}
+.plan-price{display:flex;align-items:baseline;gap:6px;margin-bottom:4px}
+.plan-price .amt{font-family:'Space Grotesk';font-size:46px;font-weight:700}
+.plan-price .per{color:var(--text-muted);font-size:14px}
+.plan-per-video{font-size:12px;margin-bottom:24px;font-family:'JetBrains Mono'}
+.plan-per-video.muted{color:var(--text-muted)}
+.plan-per-video.accent{color:var(--accent);font-weight:600}
+.plan ul{list-style:none;margin-bottom:28px;flex:1}
+.plan li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;font-size:14px;color:var(--text-secondary)}
+.plan li svg{width:16px;height:16px;color:var(--accent);flex-shrink:0;margin-top:3px}
+.plan .btn{width:100%;margin-top:auto}
+.plan-guarantee{font-size:11px;color:var(--text-muted);margin-top:12px;text-align:center;font-family:'JetBrains Mono'}
+.pricing-notes{max-width:760px;margin:36px auto 0;color:var(--text-muted);font-size:13px;line-height:1.7;text-align:center}
+.pricing-notes strong{color:var(--text-secondary)}
+
+/* ===== FAQ ===== */
+.faq-list{max-width:720px;margin:0 auto}
+.faq-item{border:1px solid var(--border-default);border-radius:14px;margin-bottom:12px;overflow:hidden;transition:all .3s;background:var(--bg-card)}
+.faq-item.open{border-color:rgba(163,230,53,.2);background:rgba(163,230,53,.02)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:20px;width:100%;background:none;border:none;color:var(--text-primary);font-weight:600;font-size:15px;font-family:'Inter',sans-serif;text-align:left;padding:20px 24px;cursor:none}
+.faq-q .faq-icon{color:var(--accent);font-size:22px;font-weight:400;transition:transform .3s;flex-shrink:0;font-family:'JetBrains Mono'}
+.faq-item.open .faq-q .faq-icon{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq-a-inner{padding:0 24px 20px;color:var(--text-secondary);font-size:14px;line-height:1.7}
+.faq-item.open .faq-a{max-height:300px}
+
+/* ===== CTA BANNER ===== */
+.cta-banner{background:rgba(12,12,18,.5);border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default);position:relative;overflow:hidden}
+.cta-inner{text-align:center;max-width:620px;margin:0 auto;position:relative;z-index:2}
+.cta-inner h2{font-size:clamp(28px,4vw,44px);margin-bottom:16px}
+.cta-inner p{color:var(--text-secondary);font-size:17px;margin-bottom:32px}
+
+/* ===== CONTACT ===== */
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start}
+.contact-info h3{font-size:28px;margin-bottom:16px}
+.contact-info>p{color:var(--text-secondary);margin-bottom:28px;font-size:16px}
+.contact-list{list-style:none}
+.contact-list li{display:flex;gap:14px;align-items:center;padding:12px 0;font-size:14px;color:var(--text-secondary)}
+.contact-list .ic{width:40px;height:40px;border-radius:12px;background:rgba(163,230,53,.08);border:1px solid rgba(163,230,53,.15);color:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-list .ic svg{width:18px;height:18px}
+.form{background:var(--bg-card);border:1px solid var(--border-default);border-radius:22px;padding:36px;position:relative;overflow:hidden}
+.form::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--cyan),var(--purple))}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:12px;font-weight:500;margin-bottom:8px;color:var(--text-secondary);font-family:'JetBrains Mono';text-transform:uppercase;letter-spacing:.05em}
+.field input,.field select,.field textarea{width:100%;background:var(--bg-surface);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px 16px;color:var(--text-primary);font-size:14px;font-family:inherit;transition:all .3s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:rgba(163,230,53,.4);box-shadow:0 0 0 4px rgba(163,230,53,.06)}
+.field textarea{resize:vertical;min-height:100px}
+.field input::placeholder,.field textarea::placeholder{color:var(--text-muted)}
+.form .btn{width:100%;margin-top:8px}
+.form-status{margin-top:14px;font-size:13px;display:none;font-family:'JetBrains Mono'}
+.form-status.ok{display:block;color:var(--success)}
+.form-status.err{display:block;color:#ef4444}
+
+/* ===== FOOTER ===== */
+footer{background:var(--bg-primary);border-top:1px solid var(--border-default);padding:60px 0 30px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand p{color:var(--text-secondary);font-size:13px;margin-top:16px;max-width:320px;line-height:1.7}
+.footer-col h4{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px;color:var(--text-secondary);font-family:'JetBrains Mono'}
+.footer-col a{display:block;color:var(--text-muted);font-size:13px;padding:5px 0;transition:color .2s}
+.footer-col a:hover{color:var(--accent)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--border-default);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;color:var(--text-muted);font-size:12px;font-family:'JetBrains Mono'}
+.footer-socials{display:flex;gap:16px}
+.footer-socials a{color:var(--text-muted);transition:color .2s}
+.footer-socials a:hover{color:var(--accent)}
+
+/* ===== TRUST STRIP ===== */
+.trust-strip{background:rgba(12,12,18,.8);border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default);padding:24px 0;backdrop-filter:blur(8px)}
+.trust-inner{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px;align-items:center;font-size:13px;color:var(--text-secondary)}
+.trust-inner strong{color:#fff;font-weight:600}
+.trust-inner .sep{color:var(--accent);font-size:10px;opacity:.5}
+
+/* ===== SECTION COMMON ===== */
+section{padding:100px 0;position:relative;overflow:hidden}
+.section-head{text-align:center;max-width:640px;margin:0 auto 64px}
+.section-head .tag{color:var(--accent);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;margin-bottom:16px;font-family:'JetBrains Mono'}
+.section-head h2{font-size:clamp(28px,4vw,44px);margin-bottom:16px}
+.section-head p{color:var(--text-secondary);font-size:16px}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.25,.46,.45,.94)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+
+/* ===== 3D TILT ===== */
+.tilt-card{transform-style:preserve-3d;perspective:1000px}
+
+/* ===== NEON LINE ===== */
+.neon-line{height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:0 auto;max-width:200px;opacity:.4}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:960px){
+  .portfolio-grid,.pricing-grid,.platforms-grid{grid-template-columns:repeat(2,1fr)}
+  .process-grid,.styles-grid{grid-template-columns:repeat(2,1fr)}
+  .contact-grid{grid-template-columns:1fr;gap:40px}
+  .plan.featured{transform:none}
+  .plan.featured:hover{transform:translateY(-5px)}
+  .compare-table{font-size:12px}
+  .compare-table th,.compare-table td{padding:12px}
+}
+@media(max-width:640px){
+  .portfolio-grid,.pricing-grid,.process-grid,.guarantee-grid,.platforms-grid,.styles-grid{grid-template-columns:1fr}
+  .hero{padding:160px 0 60px}
+  section{padding:60px 0}
+  .hero-stats{gap:16px}
+  .hero-stat .stat-num{font-size:28px}
+  .hero-stat{min-width:90px;padding:14px}
+  .hero-meta{grid-template-columns:repeat(2,1fr);gap:16px}
+  .trust-logos{gap:24px}
+  .trust-logo{font-size:14px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:24px}
+  .footer-brand{grid-column:1/-1;text-align:center}
+  .footer-brand p{max-width:100%;margin:12px auto 0}
+  .footer-col{text-align:center}
+  .footer-bottom{flex-direction:column;text-align:center;gap:12px}
+  .urgency-bar{font-size:11px;padding:8px 12px}
+  .ba-metrics{grid-template-columns:1fr}
+  .calc-input input[type=range]{width:100px}
+  .compare-table{display:block;overflow-x:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loader" id="loader">
+  <div class="loader-text" id="loaderText">INITIALIZING FOCALCUT...</div>
+  <div class="loader-bar"><div class="loader-bar-fill" id="loaderFill"></div></div>
+</div>
+
+<!-- Custom Cursor -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Particle Canvas -->
+<canvas id="particles"></canvas>
+
+<!-- Scanlines -->
+<div class="scanlines"></div>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="logo-text">FocalCut</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#before-after">Before/After</a>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#calculator">ROI Calc</a>
+      <a href="#faq">FAQ</a>
+      <a href="#pricing" class="btn btn-primary" style="padding:10px 20px;font-size:12px;border-radius:10px">Get Started →</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
+  </div>
+</nav>
+
+<!-- Urgency Bar -->
+<div class="urgency-bar" id="urgencyBar">
+  ⚡ <strong>Limited:</strong> Only <span id="spotsLeft">7</span> spots left this month · Offer expires in <span class="urgency-timer" id="urgencyTimer">23:59:42</span>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="grid-bg"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="container hero-inner">
+    <div class="hud-frame">
+      <div class="corner-bl"></div>
+      <div class="corner-br"></div>
+
+      <div class="eyebrow reveal"><span class="dot"></span> SYSTEM ONLINE · ACCEPTING CLIENTS Q4 2026</div>
+      <h1 class="reveal reveal-delay-1">15 Professional Videos<br>in 24 Hours. <span class="gradient-text">Zero Editing Required.</span></h1>
+      <p class="hero-desc reveal reveal-delay-2">Send raw footage via Drive or Dropbox. Get retention-engineered Reels, TikToks & Shorts delivered in 24–48h. No subscriptions. No hassle. Just growth.</p>
+
+      <div class="hero-stats reveal reveal-delay-3">
+        <div class="hero-stat"><div class="stat-num" data-count="24" data-suffix="h">0h</div><div class="stat-lbl">Turnaround</div></div>
+        <div class="hero-stat"><div class="stat-num" data-count="15" data-suffix="">0</div><div class="stat-lbl">Videos / Pack</div></div>
+        <div class="hero-stat"><div class="stat-num" data-count="500" data-suffix="+">0</div><div class="stat-lbl">Videos Delivered</div></div>
+        <div class="hero-stat"><div class="stat-num" data-count="98" data-suffix="%">0</div><div class="stat-lbl">Client Retention</div></div>
+      </div>
+
+      <div class="hero-cta reveal reveal-delay-4">
+        <a href="#pricing" class="btn btn-primary btn-lg btn-primary-pulse">Get Your First Video in 24h →</a>
+        <a href="#before-after" class="btn btn-ghost btn-lg">See Before/After</a>
+      </div>
+
+      <div class="live-counter reveal reveal-delay-4">
+        <span class="pulse"></span>
+        <span id="liveEditing">3 videos being edited right now</span>
+      </div>
+
+      <div class="hero-meta reveal">
+        <div><span class="num">15</span><span class="lbl">Videos / flagship</span></div>
+        <div><span class="num">24–48h</span><span class="lbl">Turnaround</span></div>
+        <div><span class="num">2</span><span class="lbl">Revision rounds</span></div>
+        <div><span class="num">1-on-1</span><span class="lbl">Communication</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRUST LOGOS ===== -->
+<div class="trust-section">
+  <div class="container">
+    <div class="trust-label reveal">Trusted by creators on</div>
+    <div class="trust-logos reveal reveal-delay-1">
+      <span class="trust-logo">TikTok</span>
+      <span class="trust-logo">Instagram</span>
+      <span class="trust-logo">YouTube</span>
+      <span class="trust-logo">Shopify</span>
+      <span class="trust-logo">Podcasts</span>
+      <span class="trust-logo">Real Estate</span>
+      <span class="trust-logo">Fitness</span>
+      <span class="trust-logo">Coaching</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BEFORE/AFTER ===== -->
+<section class="ba-section" id="before-after">
+  <div class="orb orb-4"></div>
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">// BEFORE → AFTER</div>
+      <h2>See the <span class="gradient-text">FocalCut Difference</span></h2>
+      <p>Drag the slider to compare raw footage vs. our retention-engineered edit.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center" class="ba-wrapper">
+      <div class="reveal">
+        <div class="ba-container" id="baContainer">
+          <div class="ba-before">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="8" cy="8" r="2"/><path d="M2 15l5-5 3 3 4-4 8 8"/></svg>
+              <p style="color:rgba(255,255,255,.4);font-size:13px;margin-top:12px;text-align:center">Raw footage • No captions • No hooks • No pacing</p>
+            </div>
+            <div class="ba-before-content">
+              <span class="ba-label before">BEFORE</span>
+              <p style="font-size:12px;color:rgba(255,255,255,.5);margin-top:8px">4s avg view • 0.3% retention</p>
+            </div>
+          </div>
+          <div class="ba-after" id="baAfter">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(163,230,53,.6)" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              <p style="color:rgba(163,230,53,.7);font-size:13px;margin-top:12px;text-align:center;font-weight:600">Hook optimized • Dynamic captions • Sound design • Brand styling</p>
+            </div>
+            <div class="ba-after-content">
+              <span class="ba-label after">AFTER</span>
+              <p style="font-size:12px;color:rgba(255,255,255,.6);margin-top:8px">12s avg view • 3.2x retention</p>
+            </div>
+          </div>
+          <div class="ba-slider" id="baSlider">
+            <div class="ba-handle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l-5 9 5 9M16 3l5 9-5 9"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="ba-metrics">
+          <div class="ba-metric"><div class="val red">4s</div><div class="lbl">Before: Avg View</div></div>
+          <div class="ba-metric"><div class="val green">12s</div><div class="lbl">After: Avg View</div></div>
+          <div class="ba-metric"><div class="val red">0.3%</div><div class="lbl">Before: Retention</div></div>
+          <div class="ba-metric"><div class="val green">3.2x</div><div class="lbl">After: Retention</div></div>
+          <div class="ba-metric"><div class="val red">120</div><div class="lbl">Before: Views</div></div>
+          <div class="ba-metric"><div class="val green">1.2M</div><div class="lbl">After: Views</div></div>
+          <div class="ba-metric"><div class="val red">0</div><div class="lbl">Before: Leads</div></div>
+          <div class="ba-metric"><div class="val green">340</div><div class="lbl">After: Leads</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EDITING STYLES ===== -->
+<section id="styles">
+  <div class="orb orb-5"></div>
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">// EDITING STYLES</div>
+      <h2>We edit every <span class="gradient-text">content format</span></h2>
+      <p>From talking-heads to product showcases — we've got your niche covered.</p>
+    </div>
+    <div class="styles-grid">
+      <div class="style-card tilt-card reveal reveal-delay-1">
+        <div class="style-card-bg s1"></div>
+        <div class="style-card-overlay">
+          <div class="style-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg></div>
+          <h4>Talking Head</h4>
+          <p>Hook-first edits with dynamic captions</p>
+        </div>
+        <span class="tag">POPULAR</span>
+      </div>
+      <div class="style-card tilt-card reveal reveal-delay-2">
+        <div class="style-card-bg s2"></div>
+        <div class="style-card-overlay">
+          <div class="style-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <h4>Podcast Clips</h4>
+          <p>Multi-cam + viral moment extraction</p>
+        </div>
+        <span class="tag">TRENDING</span>
+      </div>
+      <div class="style-card tilt-card reveal reveal-delay-3">
+        <div class="style-card-bg s3"></div>
+        <div class="style-card-overlay">
+          <div class="style-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg></div>
+          <h4>Product Showcase</h4>
+          <p>Cinematic product reels for e-com</p>
+        </div>
+      </div>
+      <div class="style-card tilt-card reveal reveal-delay-4">
+        <div class="style-card-bg s4"></div>
+        <div class="style-card-overlay">
+          <div class="style-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
+          <h4>B-Roll + Vlog</h4>
+          <p>Story-driven lifestyle content</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PORTFOLIO ===== -->
+<section id="work" style="background:rgba(12,12,18,.3);border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default)">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">// SELECTED WORK</div>
+      <h2>Recent edits that <span class="gradient-text">actually performed</span></h2>
+      <p>Real projects from our editing pipeline. These edits generated millions of views.</p>
+    </div>
+    <div class="portfolio-grid">
+      <div class="work tilt-card reveal reveal-delay-1">
+        <div class="work-bg work-bg-1"></div><div class="work-overlay"></div><div class="work-grid"></div>
+        <div class="work-badge"><span class="badge-dot"></span>1.2M Views</div>
+        <div class="work-play"><div class="work-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="work-info"><div class="work-cat">Business Coach</div><div class="work-title">Talking-head hook restructure</div></div>
+      </div>
+      <div class="work tilt-card reveal reveal-delay-2">
+        <div class="work-bg work-bg-2"></div><div class="work-overlay"></div><div class="work-grid"></div>
+        <div class="work-badge"><span class="badge-dot"></span>3x Retention</div>
+        <div class="work-play"><div class="work-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="work-info"><div class="work-cat">Fitness Brand</div><div class="work-title">Seamless loop transition edit</div></div>
+      </div>
+      <div class="work tilt-card reveal reveal-delay-3">
+        <div class="work-bg work-bg-3"></div><div class="work-overlay"></div><div class="work-grid"></div>
+        <div class="work-badge"><span class="badge-dot"></span>840K Views</div>
+        <div class="work-play"><div class="work-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="work-info"><div class="work-cat">E-commerce</div><div class="work-title">Product showcase reel</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROCESS ===== -->
+<section class="process" id="process">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">// HOW IT WORKS</div>
+      <h2>From Raw Footage to Posted in <span class="gradient-text">3 Steps</span></h2>
+    </div>
+    <div class="process-grid">
+      <div class="process-line"></div>
+      <div class="sys tilt-card reveal reveal-delay-1">
+        <div class="sys-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <div class="sys-num">STEP 01</div>
+        <h4>Send Footage</h4>
+        <p>Upload raw clips to Drive/Dropbox and paste the link in your portal. No file size limits.</p>
+      </div>
+      <div class="sys tilt-card reveal reveal-delay-2">
+        <div class="sys-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z"/></svg></div>
+        <div class="sys-num">STEP 02</div>
+        <h4>We Edit</h4>
+        <p>Our retention system applies hooks, captions, sound design and brand-consistent motion.</p>
+      </div>
+      <div class="sys tilt-card reveal reveal-delay-3">
+        <div class="sys-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div class="sys-num">STEP 03</div>
+        <h4>Approve & Post</h4>
+        <p>Review in your portal. Request revisions or approve and download. Ready to post.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TERMINAL ===== -->
+<section id="terminal-section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">// SYSTEM LOG</div>
+      <h2>How a video goes from <span class="gradient-text">raw to viral</span></h2>
+    </div>
+    <div class="terminal reveal reveal-delay-1">
+      <div class="terminal-header">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+        <span class="terminal-title">focalcut@pipeline ~ %</span>
+      </div>
+      <div class="terminal-body" id="terminalBody">
+        <div><span class="prompt">$</span> <span class="cmd">focalcut init</span> <span class="output">--project "client_284"</span></div>
+        <div><span class="success">✓</span> <span class="output">Footage received: 3 clips (4K, 23min total)</span></div>
+        <div><span class="prompt">$</span> <span class="cmd">focalcut analyze</span> <span class="output">--hooks --retention</span></div>
+        <div><span class="success">✓</span> <span class="output">Best hook identified at 0:42 (engagement spike: 340%)</span></div>
+        <div><span class="prompt">$</span> <span class="cmd">focalcut edit</span> <span class="output">--style retention-engineered --captions dynamic</span></div>
+        <div><span class="output">  → Applying hook optimization...</span></div>
+        <div><span class="output">  → Adding dynamic captions (font: Montserrat Bold)...</span></div>
+        <div><span class="output">  → Sound design: bass drop at 0:03, whoosh transitions...</span></div>
+        <div><span class="output">  → Color grade: brand-matched LUT applied...</span></div>
+        <div><span class="output">  → Export: 1080x1920, H.264, 60fps...</span></div>
+        <div><span class="success">✓</span> <span class="highlight">5 videos delivered in 18h 42m</span></div>
+        <div><span class="prompt">$</span> <span class="terminal-cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DIY vs FOCALCUT ===== -->
+<section id="compare" style="background:rgba(12,12,18,.3);border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default)">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">// COMPARISON</div>
+      <h2>DIY Editing vs <span class="gradient-text">FocalCut</span></h2>
+      <p>See why 500+ creators chose to outsource their editing.</p>
+    </div>
+    <div class="reveal reveal-delay-1" style="overflow-x:auto">
+      <table class="compare-table">
+        <thead>
+          <tr><th>Feature</th><th>DIY / Freelancer</th><th>FocalCut ⚡</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Turnaround time</td><td class="meh">3–7 days</td><td class="check">24–48 hours</td></tr>
+          <tr><td>Hook optimization</td><td class="cross">✕</td><td class="check">✓ Data-driven</td></tr>
+          <tr><td>Retention editing</td><td class="cross">✕</td><td class="check">✓ Engineered</td></tr>
+          <tr><td>Dynamic captions</td><td class="meh">Basic</td><td class="check">✓ Animated + branded</td></tr>
+          <tr><td>Sound design</td><td class="cross">✕</td><td class="check">✓ Custom</td></tr>
+          <tr><td>Revision rounds</td><td class="meh">1 (extra $)</td><td class="check">✓ 2 included</td></tr>
+          <tr><td>Consistent brand style</td><td class="cross">✕</td><td class="check">✓ Locked-in</td></tr>
+          <tr><td>Portal + tracking</td><td class="cross">✕</td><td class="check">✓ Real-time</td></tr>
+          <tr><td>Monthly cost</td><td class="meh">$500–2000+</td><td class="check">$26.60/video</td></tr>
+          <tr><td>Contracts</td><td class="meh">Often required</td><td class="check">✓ Zero — one-time</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ROI CALCULATOR ===== -->
+<section id="calculator">
+  <div class="orb orb-1" style="top:20%;left:60%"></div>
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">// ROI CALCULATOR</div>
+      <h2>See how much you <span class="gradient-text">save with FocalCut</span></h2>
+      <p>Adjust the sliders to see your personalized savings.</p>
+    </div>
+    <div class="calculator reveal reveal-delay-1">
+      <div class="calc-row">
+        <span class="calc-label">Videos per week</span>
+        <div class="calc-input">
+          <input type="range" id="calcVideos" min="1" max="15" value="5">
+          <span class="calc-value" id="calcVideosVal">5</span>
+        </div>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Hours you spend editing per video</span>
+        <div class="calc-input">
+          <input type="range" id="calcHours" min="1" max="8" value="3">
+          <span class="calc-value" id="calcHoursVal">3h</span>
+        </div>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Your hourly rate ($)</span>
+        <div class="calc-input">
+          <input type="range" id="calcRate" min="25" max="500" value="100" step="25">
+          <span class="calc-value" id="calcRateVal">$100</span>
+        </div>
+      </div>
+      <div class="calc-result">
+        <div class="sub">YOU SAVE PER MONTH</div>
+        <div class="big" id="calcSavings">$2,400</div>
+        <div class="sub" id="calcHoursSaved">60 hours returned to you every month</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PLATFORM RESULTS ===== -->
+<section style="background:rgba(12,12,18,.3);border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default)">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">// PLATFORM RESULTS</div>
+      <h2>Real numbers from <span class="gradient-text">real clients</span></h2>
+    </div>
+    <div class="platforms-grid">
+      <div class="platform-card tiktok reveal reveal-delay-1">
+        <div class="platform-icon">🎵</div>
+        <div class="platform-name">TikTok</div>
+        <div class="platform-stat"><span class="label">Avg views increase</span><span class="value">+847%</span></div>
+        <div class="platform-stat"><span class="label">Avg follower growth</span><span class="value">+12K/mo</span></div>
+        <div class="platform-stat"><span class="label">Viral videos (100K+)</span><span class="value">23</span></div>
+        <div class="platform-stat"><span class="label">Avg watch time</span><span class="value">12.4s</span></div>
+      </div>
+      <div class="platform-card reels reveal reveal-delay-2">
+        <div class="platform-icon">📸</div>
+        <div class="platform-name">Instagram Reels</div>
+        <div class="platform-stat"><span class="label">Avg views increase</span><span class="value">+612%</span></div>
+        <div class="platform-stat"><span class="label">Avg follower growth</span><span class="value">+8K/mo</span></div>
+        <div class="platform-stat"><span class="label">Profile visits</span><span class="value">+340%</span></div>
+        <div class="platform-stat"><span class="label">Avg watch time</span><span class="value">9.8s</span></div>
+      </div>
+      <div class="platform-card shorts reveal reveal-delay-3">
+        <div class="platform-icon">▶️</div>
+        <div class="platform-name">YouTube Shorts</div>
+        <div class="platform-stat"><span class="label">Avg views increase</span><span class="value">+1.2K%</span></div>
+        <div class="platform-stat"><span class="label">Subscriber growth</span><span class="value">+5K/mo</span></div>
+        <div class="platform-stat"><span class="label">Watch time hours</span><span class="value">+890%</span></div>
+        <div class="platform-stat"><span class="label">Avg watch time</span><span class="value">14.2s</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section>
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">// CLIENT RESULTS</div>
+      <h2>Edits that <span class="gradient-text">actually perform</span></h2>
+      <p>Real results from creators who trust FocalCut with their content.</p>
+    </div>
+    <div class="guarantee-grid">
+      <div class="testi-card tilt-card reveal reveal-delay-1">
+        <div class="testi-header">
+          <div class="testi-avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" alt="Sarah K."></div>
+          <div class="testi-info"><h4>Sarah K.</h4><p>Fitness Creator · 240K</p></div>
+        </div>
+        <div class="testi-result">📈 1.2M Views on TikTok</div>
+        <blockquote>"FocalCut turned a 20-min podcast into 5 Reels. One hit 1.2M views in a week. The hook restructuring is real."</blockquote>
+        <div class="testi-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      </div>
+      <div class="testi-card tilt-card reveal reveal-delay-2">
+        <div class="testi-header">
+          <div class="testi-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Marcus R."></div>
+          <div class="testi-info"><h4>Marcus R.</h4><p>Business Coach · 85K</p></div>
+        </div>
+        <div class="testi-result">⏱️ 10 Hours Saved Weekly</div>
+        <blockquote>"I just dump my Drive link and get them back on Tuesday. Absolute game changer for my content workflow."</blockquote>
+        <div class="testi-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      </div>
+      <div class="testi-card tilt-card reveal reveal-delay-3">
+        <div class="testi-header">
+          <div class="testi-avatar"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" alt="James T."></div>
+          <div class="testi-info"><h4>James T.</h4><p>Real Estate · 42K</p></div>
+        </div>
+        <div class="testi-result">🎯 3x Avg View Duration</div>
+        <blockquote>"AVD went from 4s to 12s. They don't just cut clips — they engineer them to keep people watching."</blockquote>
+        <div class="testi-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section id="pricing" style="background:rgba(12,12,18,.3);border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default)">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">// PRICING</div>
+      <h2>Simple. Flat. <span class="gradient-text">One-time.</span></h2>
+      <p>No subscriptions. Buy video credits and submit footage whenever you're ready.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="plan reveal reveal-delay-1">
+        <div class="plan-icon default"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#737373" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div class="plan-name">THE STARTER</div>
+        <div class="plan-best">Best for: Getting Noticed</div>
+        <div class="plan-price"><span class="amt">$149</span><span class="per">one-time</span></div>
+        <div class="plan-per-video muted">~ $37.25 / video</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>4 short-form videos (15–30s)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Essential captions & hooks</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>48-hour turnaround</li>
+        </ul>
+        <a href="https://buy.stripe.com/9B65kv1RNgAsdmR4UZaMU03" class="btn btn-ghost">Get The Starter</a>
+      </div>
+      <div class="plan reveal reveal-delay-2">
+        <div class="plan-icon default"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#737373" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div class="plan-name">CONSISTENCY BUILDER</div>
+        <div class="plan-best">Best for: Weekly posters</div>
+        <div class="plan-price"><span class="amt">$299</span><span class="per">one-time</span></div>
+        <div class="plan-per-video muted">~ $29.90 / video</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>10 short-form videos (15–30s)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Advanced retention editing</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>48h turnaround + 1 revision/video</li>
+        </ul>
+        <a href="https://buy.stripe.com/4gM7sDcwrdogdmR3QVaMU00" class="btn btn-ghost">Get Consistency Builder</a>
+      </div>
+      <div class="plan featured reveal reveal-delay-3">
+        <div class="plan-icon accent"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A3E635" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <div class="plan-name">THE GROWTH ENGINE</div>
+        <div class="plan-best">Most Popular · Best Value</div>
+        <div class="plan-price"><span class="amt">$399</span><span class="per">one-time</span></div>
+        <div class="plan-per-video accent">only $26.60 / video</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>15 short-form videos (15–30s)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Custom brand styling & sound</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>24h turnaround + 2 revisions/video</li>
+        </ul>
+        <a href="https://buy.stripe.com/cNiaEP7c7dogbeJfzDaMU04" class="btn btn-primary btn-primary-pulse">Get The Growth Engine</a>
+        <p class="plan-guarantee">🛡️ Brief-Match Guarantee</p>
+      </div>
+    </div>
+    <p class="pricing-notes reveal">
+      Turnaround measured from receipt of complete footage to <strong>first draft</strong>. Revision = changes based on original brief. Unused credits stay on your account forever.
+    </p>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">// FAQ</div>
+      <h2>Questions, <span class="gradient-text">answered</span></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal"><button class="faq-q">How do I send my raw footage?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">After purchase you receive a private dashboard link. Paste a Google Drive, Dropbox or Frame.io link — you never upload large files to our website.</div></div></div>
+      <div class="faq-item reveal"><button class="faq-q">Is this a monthly subscription?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">No. Every package is a one-time purchase of video credits. Use them at your own pace and reorder only when you need more.</div></div></div>
+      <div class="faq-item reveal"><button class="faq-q">What does "24–48h turnaround" mean?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Time from receiving complete footage + instructions to first draft delivery. Growth Engine: 24h. Starter & Consistency Builder: 48h.</div></div></div>
+      <div class="faq-item reveal"><button class="faq-q">What counts as a revision?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">A change to an existing edit based on your original brief (pacing, captions, music, trim). New concepts or footage = new edit.</div></div></div>
+      <div class="faq-item reveal"><button class="faq-q">I bought 10 videos but only have footage for 1. OK?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Completely fine. Submit one project now; remaining credits stay on your dashboard forever. Submit the rest whenever ready.</div></div></div>
+      <div class="faq-item reveal"><button class="faq-q">What if I don't like the first draft?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">We offer a 100% Brief-Match Guarantee. If the first draft misses your brief, we re-edit for free until it matches. Your satisfaction is non-negotiable.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-banner">
+  <div class="orb orb-2" style="top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+  <div class="container cta-inner reveal">
+    <h2>Ready to stop scrolling<br>and start <span class="gradient-text">growing?</span></h2>
+    <p>Secure your package today. First drafts back in 24–48 hours.</p>
+    <a href="#pricing" class="btn btn-primary btn-lg btn-primary-pulse">Get Your First Video in 24h →</a>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="tag" style="color:var(--accent);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;margin-bottom:16px;font-family:'JetBrains Mono">// GET IN TOUCH</div>
+        <h3>Questions before you buy?</h3>
+        <p>Tell us about your channel and goals. We reply within 24 hours with an honest recommendation.</p>
+        <ul class="contact-list">
+          <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span> hello@focalcut.com</li>
+          <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Reply within 24 hours</li>
+          <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></span> Remote · Worldwide clients</li>
+        </ul>
+      </div>
+      <form class="form reveal reveal-delay-2" id="contactForm">
+        <div class="field"><label>Your name</label><input type="text" name="name" placeholder="Jane Doe" required></div>
+        <div class="field"><label>Email</label><input type="email" name="email" placeholder="jane@brand.com" required></div>
+        <div class="field"><label>What do you need?</label><select name="creator_type"><option>Video Editing Package</option><option>Custom Quote</option><option>General Question</option></select></div>
+        <div class="field"><label>Message</label><textarea name="message" placeholder="Tell us about your project..." required></textarea></div>
+        <button type="submit" class="btn btn-primary btn-lg" id="contactBtn">Send Message →</button>
+        <p class="form-status" id="formStatus"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><span class="logo-text">FocalCut</span></a>
+        <p>Premium short-form video editing for creators and brands who refuse to compromise on retention.</p>
+      </div>
+      <div class="footer-col"><h4>Product</h4><a href="#work">Portfolio</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="#calculator">ROI Calculator</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="#contact">Contact</a><a href="#">Client Portal</a><a href="#before-after">Before/After</a></div>
+      <div class="footer-col"><h4>Legal</h4><a href="#">Terms of Service</a><a href="#">Privacy Policy</a><a href="#">Refund Policy</a></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Big Bay Mall LLC · FocalCut · Wyoming, USA</div>
+      <div class="footer-socials"><a href="#">Twitter</a><a href="#">Instagram</a><a href="#">TikTok</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== LOADING SCREEN =====
+const loader = document.getElementById('loader');
+const loaderFill = document.getElementById('loaderFill');
+const loaderText = document.getElementById('loaderText');
+const loadSteps = ['LOADING ASSETS...','INITIALIZING ENGINE...','READY'];
+let loadProgress = 0;
+const loadInterval = setInterval(() => {
+  loadProgress += Math.random() * 30 + 10;
+  if (loadProgress >= 100) {
+    loadProgress = 100;
+    clearInterval(loadInterval);
+    loaderText.textContent = 'READY';
+    setTimeout(() => loader.classList.add('hidden'), 400);
+  }
+  loaderFill.style.width = loadProgress + '%';
+  loaderText.textContent = loadSteps[Math.min(Math.floor(loadProgress / 40), 2)];
+}, 300);
+
+// ===== CUSTOM CURSOR =====
+const dot = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  dot.style.left = mouseX - 4 + 'px';
+  dot.style.top = mouseY - 4 + 'px';
+});
+
+function animateRing() {
+  ringX += (mouseX - ringX) * 0.15;
+  ringY += (mouseY - ringY) * 0.15;
+  ring.style.left = ringX - 20 + 'px';
+  ring.style.top = ringY - 20 + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.querySelectorAll('a, button, .tilt-card, input, select, textarea').forEach(el => {
+  el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+  el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+});
+
+// ===== PARTICLES =====
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor() {
+    this.reset();
+  }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 1.5 + 0.5;
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.speedY = (Math.random() - 0.5) * 0.3;
+    this.opacity = Math.random() * 0.5 + 0.1;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(163,230,53,${this.opacity})`;
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  // Draw connections
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(163,230,53,${0.05 * (1 - dist / 120)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// ===== NAV =====
+const nav = document.getElementById('nav');
+const toggle = document.getElementById('menuToggle');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
+toggle.addEventListener('click', () => {
+  const open = nav.classList.toggle('open');
+  toggle.textContent = open ? '×' : '☰';
+});
+document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => {
+  nav.classList.remove('open'); toggle.textContent = '☰';
+}));
+
+// ===== SCROLL REVEAL =====
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ===== ANIMATED COUNTERS =====
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseInt(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      let current = 0;
+      const increment = target / 120;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) { current = target; clearInterval(timer); }
+        el.textContent = Math.floor(current) + suffix;
+      }, 16);
+      counterObs.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+// ===== FAQ =====
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+
+// ===== BEFORE/AFTER SLIDER =====
+const baContainer = document.getElementById('baContainer');
+const baSlider = document.getElementById('baSlider');
+const baAfter = document.getElementById('baAfter');
+let isDragging = false;
+
+function updateSlider(x) {
+  const rect = baContainer.getBoundingClientRect();
+  let pos = ((x - rect.left) / rect.width) * 100;
+  pos = Math.max(5, Math.min(95, pos));
+  baSlider.style.left = pos + '%';
+  baAfter.style.clipPath = `inset(0 0 0 ${pos}%)`;
+}
+
+baSlider.addEventListener('mousedown', () => isDragging = true);
+baContainer.addEventListener('mousedown', e => { isDragging = true; updateSlider(e.clientX); });
+document.addEventListener('mouseup', () => isDragging = false);
+document.addEventListener('mousemove', e => { if (isDragging) updateSlider(e.clientX); });
+baContainer.addEventListener('touchmove', e => { updateSlider(e.touches[0].clientX); e.preventDefault(); }, { passive: false });
+
+// ===== ROI CALCULATOR =====
+const calcVideos = document.getElementById('calcVideos');
+const calcHours = document.getElementById('calcHours');
+const calcRate = document.getElementById('calcRate');
+const calcSavings = document.getElementById('calcSavings');
+const calcHoursSaved = document.getElementById('calcHoursSaved');
+
+function updateCalc() {
+  const videos = parseInt(calcVideos.value);
+  const hours = parseInt(calcHours.value);
+  const rate = parseInt(calcRate.value);
+  document.getElementById('calcVideosVal').textContent = videos;
+  document.getElementById('calcHoursVal').textContent = hours + 'h';
+  document.getElementById('calcRateVal').textContent = '$' + rate;
+  const monthlyHours = videos * hours * 4.3;
+  const savings = Math.round(monthlyHours * rate);
+  calcSavings.textContent = '$' + savings.toLocaleString();
+  calcHoursSaved.textContent = Math.round(monthlyHours) + ' hours returned to you every month';
+}
+calcVideos.addEventListener('input', updateCalc);
+calcHours.addEventListener('input', updateCalc);
+calcRate.addEventListener('input', updateCalc);
+updateCalc();
+
+// ===== URGENCY TIMER =====
+function updateTimer() {
+  const now = new Date();
+  const end = new Date(now);
+  end.setHours(23, 59, 59, 999);
+  const diff = end - now;
+  const h = String(Math.floor(diff / 3600000)).padStart(2, '0');
+  const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+  const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+  document.getElementById('urgencyTimer').textContent = `${h}:${m}:${s}`;
+}
+setInterval(updateTimer, 1000);
+updateTimer();
+
+// ===== LIVE EDITING COUNTER =====
+const liveMessages = [
+  '3 videos being edited right now',
+  '5 videos delivered in the last hour',
+  '2 new clients joined today',
+  '12 videos in the editing queue',
+  '1.2M views generated this week',
+  '8 creators active on the portal'
+];
+let liveIdx = 0;
+setInterval(() => {
+  liveIdx = (liveIdx + 1) % liveMessages.length;
+  const el = document.getElementById('liveEditing');
+  el.style.opacity = 0;
+  setTimeout(() => { el.textContent = liveMessages[liveIdx]; el.style.opacity = 1; }, 300);
+}, 4000);
+
+// ===== 3D TILT EFFECT =====
+document.querySelectorAll('.tilt-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (y - centerY) / centerY * -5;
+    const rotateY = (x - centerX) / centerX * 5;
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+  });
+});
+
+// ===== PARALLAX ORBS =====
+document.addEventListener('mousemove', e => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 20;
+  const y = (e.clientY / window.innerHeight - 0.5) * 20;
+  document.querySelectorAll('.orb').forEach((orb, i) => {
+    const speed = (i + 1) * 0.3;
+    orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+  });
+});
+
+// ===== CONTACT FORM =====
+const API_URL = 'https://script.google.com/macros/s/AKfycbzE6iO5bhMklzklFHFnW_HXmhLem4XHMELHbLmlxMuTuUSWuKAfdkkm4Q5OM-fHEnPXDA/exec';
+document.getElementById('contactForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('contactBtn');
+  const status = document.getElementById('formStatus');
+  btn.disabled = true; btn.textContent = 'Sending...';
+  try {
+    await fetch(API_URL, {
+      method: 'POST', mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        action: 'contact',
+        name: e.target.name.value, email: e.target.email.value,
+        package: e.target.creator_type.value, message: e.target.message.value
+      })
+    });
+    status.className = 'form-status ok';
+    status.textContent = '✓ Message sent. We reply within 24 hours.';
+    e.target.reset();
+  } catch (err) {
+    status.className = 'form-status err';
+    status.textContent = 'Error. Please email hello@focalcut.com directly.';
+  }
+  btn.disabled = false; btn.textContent = 'Send Message →';
+});
+
+// ===== RESPONSIVE BA WRAPPER =====
+function checkBAWrapper() {
+  const wrapper = document.querySelector('.ba-wrapper');
+  if (wrapper && window.innerWidth <= 768) {
+    wrapper.style.gridTemplateColumns = '1fr';
+  } else if (wrapper) {
+    wrapper.style.gridTemplateColumns = '1fr 1fr';
+  }
+}
+checkBAWrapper();
+window.addEventListener('resize', checkBAWrapper);
+</script>
+</body>
+</html>
